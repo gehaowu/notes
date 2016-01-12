@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>构建 VPN 网络服务 | 等一个晴天</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="写在前面朋友公司希望启用远程办公，所以稍微考虑考虑，就准备搞个 VPN 来实现登陆内部网络
+关于更多远程办公相关信息请 Google VPN 远程办公
+在 FreeBSD 上用 mpd5 构建 PPTP VPN安装 PPTP 服务：12345 #Code Starportsnap fetch update					#更新portscd /usr/ports/net/mpd5					#or pkg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建 VPN 网络服务">
+<meta property="og:url" content="https://www.gehaowu.com/2015/09/Building-VPN-network/index.html">
+<meta property="og:site_name" content="等一个晴天">
+<meta property="og:description" content="写在前面朋友公司希望启用远程办公，所以稍微考虑考虑，就准备搞个 VPN 来实现登陆内部网络
+关于更多远程办公相关信息请 Google VPN 远程办公
+在 FreeBSD 上用 mpd5 构建 PPTP VPN安装 PPTP 服务：12345 #Code Starportsnap fetch update					#更新portscd /usr/ports/net/mpd5					#or pkg">
+<meta property="og:image" content="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_1.jpg">
+<meta property="og:image" content="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_2.jpg">
+<meta property="og:image" content="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_3.png">
+<meta property="og:image" content="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_4.png">
+<meta property="og:image" content="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_5.png">
+<meta property="og:updated_time" content="2015-12-03T12:09:17.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="构建 VPN 网络服务">
+<meta name="twitter:description" content="写在前面朋友公司希望启用远程办公，所以稍微考虑考虑，就准备搞个 VPN 来实现登陆内部网络
+关于更多远程办公相关信息请 Google VPN 远程办公
+在 FreeBSD 上用 mpd5 构建 PPTP VPN安装 PPTP 服务：12345 #Code Starportsnap fetch update					#更新portscd /usr/ports/net/mpd5					#or pkg">
+<link rel="alternative" href="/notes/atom.xml" title="等一个晴天" type="application/atom+xml">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/notes/css/style.css" type="text/css">
+<script type="text/javascript" src="/js/google-analytics.js" async="async" defer="defer"></script>
+<script type="text/javascript" src="/js/baidu-analytics.js" async="async" defer="defer"></script>
+</head>
+<body>
+<div id="container">
+<div id="wrap">
+<header id="header">
+	<div id="banner"></div>
+		<div id="header-outer" class="outer">
+			<div id="header-title" class="inner">
+				<h1 id="logo-wrap"><a href="/" id="logo">等一个晴天</a></h1>
+				<h2 id="subtitle-wrap"><a href="/" id="subtitle">记录 &amp; 监督</a></h2>
+			</div>
+		<div id="header-inner" class="inner">
+			<nav id="main-nav"><a id="main-nav-toggle" class="nav-icon"></a><a class="main-nav-link" href="/notes/">主页</a><a class="main-nav-link" href="/notes/archives">归档</a><a class="main-nav-link" href="/">关于</a></nav>
+			<nav id="sub-nav"><a id="nav-rss-link" class="nav-icon" href="/notes/atom.xml" title="RSS Feed"></a><a id="nav-search-btn" class="nav-icon" title="Search"></a></nav>
+		<div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.gehaowu.com"></form>
+      </div>
+	</div>
+</div>
+<script>var d = new Date();var m = d.getMinutes();var num = Math.ceil((m + 1) / (60 / 6));document.getElementById("banner").style.backgroundImage = "url(/notes/images/banner" + num + ".jpg)";</script>
+</header>
+<div class="outer">
+<section id="main"><article id="post-Building-VPN-network" class="article article-type-post" itemscope itemprop="blogPost">
+	<div class="article-meta">
+		<a href="/notes/2015/09/Building-VPN-network/" class="article-date">
+  <time datetime="2015-09-20T02:14:50.000Z" itemprop="datePublished">2015-09-20</time>
+</a>
+		
+  <div class="article-category">
+    <a class="article-category-link" href="/notes/categories/信息技术/">信息技术</a>
+  </div>
+
+	</div>
+	<div class="article-inner">
+		
+		
+			<header class="article-header">
+				
+  
+    <h1 class="article-title" itemprop="name">
+      构建 VPN 网络服务
+    </h1>
+  
+
+			</header>
+	<div class="article-entry" itemprop="articleBody">
+		
+		<!-- Table of Contents -->
+		
+			<div id="toc" class="toc-article">
+				<strong class="toc-title">提纲</strong>
+				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在_FreeBSD_上用_mpd5_构建_PPTP_VPN"><span class="toc-number">2.</span> <span class="toc-text">在 FreeBSD 上用 mpd5 构建 PPTP VPN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装_PPTP_服务："><span class="toc-number">2.1.</span> <span class="toc-text">安装 PPTP 服务：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置随机启动服务"><span class="toc-number">3.</span> <span class="toc-text">设置随机启动服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置_mpd5_主体配置文件"><span class="toc-number">3.1.</span> <span class="toc-text">设置 mpd5 主体配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加_VPN_服务的登陆帐号密码"><span class="toc-number">3.2.</span> <span class="toc-text">添加 VPN 服务的登陆帐号密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加转发规则，让登陆上VPN的客户端也能连接外网"><span class="toc-number">3.3.</span> <span class="toc-text">添加转发规则，让登陆上VPN的客户端也能连接外网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置完成，重启服务"><span class="toc-number">3.4.</span> <span class="toc-text">配置完成，重启服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发几个_KDE5_的图片，哈哈哈"><span class="toc-number">4.</span> <span class="toc-text">发几个 KDE5 的图片，哈哈哈</span></a></li></ol>
+			</div>
+		<h2 id="写在前面">写在前面</h2><p><strong>朋友公司希望启用远程办公，所以稍微考虑考虑，就准备搞个 VPN 来实现登陆内部网络</strong></p>
+<p>关于更多远程办公相关信息请 Google <a href="https://www.google.com/?gws_rd=cr,ssl#safe=strict&amp;q=VPN+%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC" target="_blank" rel="external">VPN 远程办公</a></p>
+<h2 id="在_FreeBSD_上用_mpd5_构建_PPTP_VPN">在 FreeBSD 上用 mpd5 构建 PPTP VPN</h2><h3 id="安装_PPTP_服务：">安装 PPTP 服务：</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Star</span></span><br><span class="line">portsnap fetch update					<span class="comment">#更新ports</span></span><br><span class="line"><span class="built_in">cd</span> /usr/ports/net/mpd5					<span class="comment">#or pkg install -y mpd5</span></span><br><span class="line">make install clean</span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="设置随机启动服务">设置随机启动服务</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Star</span></span><br><span class="line"><span class="comment"># PPTP 服务</span></span><br><span class="line">mpd_<span class="built_in">enable</span>=<span class="string">"YES"</span>					<span class="comment"># 开启 VPN 服务</span></span><br><span class="line">gateway_<span class="built_in">enable</span>=<span class="string">"YES"</span>					<span class="comment"># 网关转发</span></span><br><span class="line">firewall_<span class="built_in">enable</span>=<span class="string">"YES"</span>					<span class="comment"># 防火墙</span></span><br><span class="line">firewall_<span class="built_in">type</span>=<span class="string">"OPEN"</span></span><br><span class="line">firewall_logging_<span class="built_in">enable</span>=<span class="string">"YES"</span></span><br><span class="line">natd_<span class="built_in">enable</span>=<span class="string">"YES"</span>					<span class="comment"># 开启 NAT 服务</span></span><br><span class="line">natd_interface=<span class="string">"vtnet0"</span>					<span class="comment"># NAT 使用的网卡接口</span></span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置_mpd5_主体配置文件">设置 mpd5 主体配置文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Start</span></span><br><span class="line">cat /usr/<span class="built_in">local</span>/etc/mpd5/mpd.conf</span><br><span class="line"><span class="comment">#################################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#       MPD configuration file</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This file defines the configuration for mpd: what the</span></span><br><span class="line"><span class="comment"># bundles are, what the links are in those bundles, how</span></span><br><span class="line"><span class="comment"># the interface should be configured, various PPP parameters,</span></span><br><span class="line"><span class="comment"># etc. It contains commands just as you would type them</span></span><br><span class="line"><span class="comment"># in at the console. Lines without padding are labels. Lines</span></span><br><span class="line"><span class="comment"># starting with a "#" are comments.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># $Id: mpd.conf.sample,v 1.47 2012/12/18 15:39:47 dmitryluhtionov Exp $</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#################################################################</span></span><br><span class="line"></span><br><span class="line">startup:</span><br><span class="line">        <span class="comment"># configure mpd users</span></span><br><span class="line">        <span class="built_in">set</span> user foo bar admin</span><br><span class="line">        <span class="built_in">set</span> user foo1 bar1</span><br><span class="line">        <span class="comment"># configure the console</span></span><br><span class="line">        <span class="built_in">set</span> console self <span class="number">127.0</span>.<span class="number">0.1</span> <span class="number">5005</span></span><br><span class="line">        <span class="built_in">set</span> console open</span><br><span class="line">        <span class="comment"># configure the web server</span></span><br><span class="line">        <span class="built_in">set</span> web self <span class="number">0.0</span>.<span class="number">0.0</span> <span class="number">5006</span></span><br><span class="line">        <span class="built_in">set</span> web open</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Default configuration is "dialup"</span></span><br><span class="line"></span><br><span class="line">default:</span><br><span class="line">	<span class="comment">#load dialup</span></span><br><span class="line">    load pptp_server					<span class="comment"># 修改为 PPTP 模式</span></span><br><span class="line"></span><br><span class="line">pptp_server:</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Mpd as a PPTP server compatible with Microsoft Dial-Up Networking clients.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Suppose you have a private Office LAN numbered 192.168.1.0/24 and the</span></span><br><span class="line"><span class="comment"># machine running mpd is at 192.168.1.1, and also has an externally visible</span></span><br><span class="line"><span class="comment"># IP address of 1.2.3.4.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># We want to allow a client to connect to 1.2.3.4 from out on the Internet</span></span><br><span class="line"><span class="comment"># via PPTP.  We will assign that client the address 192.168.1.50 and proxy-ARP</span></span><br><span class="line"><span class="comment"># for that address, so the virtual PPP link will be numbered 192.168.1.1 local</span></span><br><span class="line"><span class="comment"># and 192.168.1.50 remote.  From the client machine's perspective, it will</span></span><br><span class="line"><span class="comment"># appear as if it is actually on the 192.168.1.0/24 network, even though in</span></span><br><span class="line"><span class="comment"># reality it is somewhere far away out on the Internet.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Our DNS server is at 192.168.1.3 and our NBNS (WINS server) is at 192.168.1.4.</span></span><br><span class="line"><span class="comment"># If you don't have an NBNS server, leave that line out.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define dynamic IP address pool.</span></span><br><span class="line">        <span class="built_in">set</span> ippool add pool1 <span class="number">192.168</span>.<span class="number">7.2</span> <span class="number">192.168</span>.<span class="number">7.254</span>	<span class="comment"># VPN 分配的 IP 范围</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create clonable bundle template named B</span></span><br><span class="line">        create bundle template B</span><br><span class="line">        <span class="built_in">set</span> iface <span class="built_in">enable</span> proxy-arp</span><br><span class="line">        <span class="built_in">set</span> iface idle <span class="number">1800</span></span><br><span class="line">        <span class="built_in">set</span> iface <span class="built_in">enable</span> tcpmssfix</span><br><span class="line">        <span class="built_in">set</span> ipcp yes vjcomp</span><br><span class="line"><span class="comment"># Specify IP address pool for dynamic assigment.</span></span><br><span class="line">        <span class="built_in">set</span> ipcp ranges <span class="number">192.168</span>.<span class="number">1.1</span>/<span class="number">32</span> ippool pool1</span><br><span class="line">        <span class="built_in">set</span> ipcp dns <span class="number">119.29</span>.<span class="number">29.29</span>			<span class="comment"># 腾讯 DNS 服务</span></span><br><span class="line">        <span class="comment">#set ipcp nbns 192.168.1.4</span></span><br><span class="line"><span class="comment"># The five lines below enable Microsoft Point-to-Point encryption</span></span><br><span class="line"><span class="comment"># (MPPE) using the ng_mppc(8) netgraph node type.</span></span><br><span class="line">        <span class="built_in">set</span> bundle <span class="built_in">enable</span> compression</span><br><span class="line">        <span class="built_in">set</span> ccp yes mppc</span><br><span class="line">        <span class="built_in">set</span> mppc yes e40</span><br><span class="line">        <span class="built_in">set</span> mppc yes e128</span><br><span class="line">        <span class="built_in">set</span> mppc yes stateless</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create clonable link template named L</span></span><br><span class="line">        create link template L pptp</span><br><span class="line"><span class="comment"># Set bundle template to use</span></span><br><span class="line">        <span class="built_in">set</span> link action bundle B</span><br><span class="line"><span class="comment"># Multilink adds some overhead, but gives full 1500 MTU.</span></span><br><span class="line">        <span class="built_in">set</span> link <span class="built_in">enable</span> multilink</span><br><span class="line">        <span class="built_in">set</span> link yes acfcomp protocomp</span><br><span class="line">        <span class="built_in">set</span> link no pap chap eap</span><br><span class="line">        <span class="built_in">set</span> link <span class="built_in">enable</span> chap</span><br><span class="line"><span class="comment"># We can use use RADIUS authentication/accounting by including</span></span><br><span class="line"><span class="comment"># another config section with label 'radius'.</span></span><br><span class="line"><span class="comment">#       load radius</span></span><br><span class="line">        <span class="built_in">set</span> link keep-alive <span class="number">10</span> <span class="number">60</span></span><br><span class="line"><span class="comment"># We reducing link mtu to avoid GRE packet fragmentation.</span></span><br><span class="line">        <span class="built_in">set</span> link mtu <span class="number">1460</span></span><br><span class="line"><span class="comment"># Configure PPTP</span></span><br><span class="line">        <span class="built_in">set</span> pptp self <span class="number">162.243</span>.<span class="number">135.5</span>			<span class="comment"># 服务器 IP</span></span><br><span class="line"><span class="comment"># Allow to accept calls</span></span><br><span class="line">        <span class="built_in">set</span> link <span class="built_in">enable</span> incoming</span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加_VPN_服务的登陆帐号密码">添加 VPN 服务的登陆帐号密码</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Start</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"ghw ghwpass"</span> &gt;/usr/<span class="built_in">local</span>/etc/mpd5/mpd.secret	<span class="comment">#设置帐号，用户 + 空格 +密码，一行一个</span></span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加转发规则，让登陆上VPN的客户端也能连接外网">添加转发规则，让登陆上VPN的客户端也能连接外网</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Start</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"ipfw add allow all from any to any"</span> &gt;/etc/ipfw.rules	<span class="comment">#设置防火墙规则</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"ipfw add divert natd ip from any to any via vtnet0"</span> &gt;&gt; &gt;/etc/ipfw.rules</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.inet.ip.forwarding=1"</span> &gt;&gt;/etc/sysctl.conf	<span class="comment">#修改syctl配置，下次启动依旧有效</span></span><br><span class="line">sysctl net.inet.ip.forwarding=<span class="number">1</span> 			<span class="comment">#让sysctl立即生效</span></span><br><span class="line">service ipfw start					<span class="comment">#重启防火墙</span></span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置完成，重启服务">配置完成，重启服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">#Code Start</span></span><br><span class="line">service mpd5 restart</span><br><span class="line"> <span class="comment">#Code End</span></span><br></pre></td></tr></table></figure>
+<p>重启后就能正常使用了。</p>
+<h2 id="发几个_KDE5_的图片，哈哈哈">发几个 KDE5 的图片，哈哈哈</h2><p><img src="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_1.jpg" alt="KDE 桌面 - 一切自由"><br><img src="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_2.jpg" alt="KDE 提交错误报告"><br><img src="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_3.png" alt="KDE Login"><br><img src="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_4.png" alt="SLIM Login"><br><img src="https://dn-gehaowu.qbox.me/notes/2015/09/kde5_5.png" alt="KDE 关于"></p>
+<p>文章原版来自 FreeBSDChina Wiki：<a href="https://wiki.freebsdchina.org/howto/m/mpd5_setup" target="_blank" rel="external">在 FreeBSD 上用 mpd5 构建 PPTP VPN</a></p>
+
+	</div>
+	<footer class="article-footer"><a data-url="https://www.gehaowu.com/notes/2015/09/Building-VPN-network/" data-id="cij71m37v001k9sv1kaa2kdzf" class="article-share-link">分享</a>
+		
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/FreeBSD/">FreeBSD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/PPTP/">PPTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/VPN/">VPN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/信息技术/">信息技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/notes/tags/开源/">开源</a></li></ul>
+
+	</footer>
+</div>
+
+<nav id="article-nav">
+  
+    <a href="/notes/2015/09/MINGW64-HEXO-TTY-ERROR/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          MINGW64环境更新HEXO到Github提示TTY错误
+        
+      </div>
+    </a>
+  
+  
+    <a href="/notes/2015/09/Upgrade-VPS-FreeBSD-DigitalOcean/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">升级 DigitalOcean VPS 里的 FreeBSD</div>
+    </a>
+  
+</nav>
+</article>
+
+
+<section id="comments"><div class="ds-thread" data-thread-key="/notes/2015/09/Building-VPN-network/" data-title="构建 VPN 网络服务" data-url="https://www.gehaowu.com/notes/2015/09/Building-VPN-network/"></div>
+<script type="text/javascript">var duoshuoQuery = {short_name:"gehaowu"};(function() {var ds = document.createElement('script');ds.type = 'text/javascript';ds.async = true;ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//dn-ds-img.qbox.me/embed.js';ds.charset = 'UTF-8';(document.getElementsByTagName('head')[0]|| document.getElementsByTagName('body')[0]).appendChild(ds);})();</script></section></section>
+<aside id="sidebar">
+<div class="widget-wrap">
+  <!--<h3 class="widget-title">关于</h3>-->
+  <br><br>
+  <div class="widget">
+  <ul class="entry">
+  <h3>访客，你好！！！<br><br>
+  欢迎来到我的互联网记事本，<br>这是我的个人主页笔记模块，<br>关注工作，记录生活。</h3>
+  <br>
+  <h4>我是学院派，您需要我的协助？<br>
+  请联系我：<br>
+  &nbsp;&nbsp;C3D0 BF84 791E D455 F01C<br>
+  &nbsp;&nbsp;BA36 4A11 BB72 B7C9 977A</h4>
+  </ul>
+  </div>
+</div>
+<div class="widget-wrap">
+  <h3 class="widget-title">技术架构</h3>
+  <div class="widget">
+  <ul class="entry">
+  <h3>主机托管服务：<br>------<br>
+  中国大陆 <a href="/go/aliyun" target="_blank" rel="nofollow">阿里云</a><br>
+  特区及海外地区 <a href="/go/digitalocean" target="_blank" rel="nofollow">DigitalOcean</a><br>
+  ------<br>
+  其它服务提供商：<br>
+  域名注册机构 <a href="/go/namesilo" target="_blank" rel="nofollow">NameSilo</a><br>
+  DNS 解析服务 <a>DNSPod</a><br>
+  静态资源加速 <a href="/go/qiniu" target="_blank" rel="nofollow">七牛云存储</a><br>
+  统计服务 <a>Baidu 统计</a><br>
+  统计服务 <a>Google Analytics</a><br>
+  评论系统 <a>多说评论</a><br>
+  评论系统 <a>Disqus</a><br>
+  搜索服务 <a>微搜索</a><br>
+  ------<br>
+  后台服务软件：<br>
+  操作系统 <a>FreeBSD</a><br>
+  网页服务器 <a>NGINX</a><br>
+  站点生成 <a>Hexo</a><br>
+  站点生成 <a>Jekyll</a><br>
+  ------<br>
+  软件依赖库：<br>
+  依赖库 <a>jQuery</a><br>
+  依赖库 <a>Angularjs</a><br>
+  依赖库 <a>Reveal.js</a><br>
+  ------<br>
+  <h4>合作伙伴：<br>
+  屠城 <a href="https://www.haomwei.com/" target="_blank">屠夫9441的博客</a><br></h4>
+  </ul>
+  </div>
+</div>
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">文章分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/notes/categories/信息技术/">信息技术</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/notes/categories/碎碎念/">碎碎念</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/notes/categories/财务会计/">财务会计</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/notes/tags/301/" style="font-size: 10px;">301</a> <a href="/notes/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/notes/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/notes/tags/DNS/" style="font-size: 10px;">DNS</a> <a href="/notes/tags/DNSSEC/" style="font-size: 10px;">DNSSEC</a> <a href="/notes/tags/DigitalOcean/" style="font-size: 10px;">DigitalOcean</a> <a href="/notes/tags/FreeBSD/" style="font-size: 17.14px;">FreeBSD</a> <a href="/notes/tags/Github/" style="font-size: 15.71px;">Github</a> <a href="/notes/tags/HEXO/" style="font-size: 10px;">HEXO</a> <a href="/notes/tags/HTTP2/" style="font-size: 10px;">HTTP2</a> <a href="/notes/tags/HTTPS/" style="font-size: 12.86px;">HTTPS</a> <a href="/notes/tags/Hostker/" style="font-size: 10px;">Hostker</a> <a href="/notes/tags/IE/" style="font-size: 10px;">IE</a> <a href="/notes/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/notes/tags/MINGW64/" style="font-size: 10px;">MINGW64</a> <a href="/notes/tags/NGINX/" style="font-size: 14.29px;">NGINX</a> <a href="/notes/tags/PPTP/" style="font-size: 10px;">PPTP</a> <a href="/notes/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/notes/tags/SSL/" style="font-size: 17.14px;">SSL</a> <a href="/notes/tags/TTY/" style="font-size: 10px;">TTY</a> <a href="/notes/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/notes/tags/VeryCloud/" style="font-size: 10px;">VeryCloud</a> <a href="/notes/tags/WPS/" style="font-size: 10px;">WPS</a> <a href="/notes/tags/netcraft/" style="font-size: 10px;">netcraft</a> <a href="/notes/tags/个人主页/" style="font-size: 10px;">个人主页</a> <a href="/notes/tags/信息技术/" style="font-size: 20px;">信息技术</a> <a href="/notes/tags/其它/" style="font-size: 11.43px;">其它</a> <a href="/notes/tags/利率/" style="font-size: 10px;">利率</a> <a href="/notes/tags/加速乐/" style="font-size: 10px;">加速乐</a> <a href="/notes/tags/安全/" style="font-size: 11.43px;">安全</a> <a href="/notes/tags/完美世界/" style="font-size: 10px;">完美世界</a> <a href="/notes/tags/开源/" style="font-size: 18.57px;">开源</a> <a href="/notes/tags/投资/" style="font-size: 10px;">投资</a> <a href="/notes/tags/收益/" style="font-size: 10px;">收益</a> <a href="/notes/tags/温州碧桂园/" style="font-size: 10px;">温州碧桂园</a> <a href="/notes/tags/照片/" style="font-size: 10px;">照片</a> <a href="/notes/tags/碎碎念/" style="font-size: 15.71px;">碎碎念</a> <a href="/notes/tags/网络/" style="font-size: 12.86px;">网络</a> <a href="/notes/tags/财务会计/" style="font-size: 11.43px;">财务会计</a> <a href="/notes/tags/贷款/" style="font-size: 10px;">贷款</a> <a href="/notes/tags/音乐/" style="font-size: 10px;">音乐</a>
+    </div>
+  </div>
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">文章归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/09/">九月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/07/">七月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/06/">六月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/notes/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/notes/2015/12/Add-DNSSEC-for-Domain/">为域名添加 DNSSEC 记录</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/11/freebsd-upgrade/">【流氓方案】 FreeBSD 系统的强行跨版本更新</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/nginx-https-config/">更新我的 NGINX 配置文件</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/forcibly-pull-github-repository/">强制拉取 Github 仓库内容</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/CDN-to-accelerate-static-resources/">静态资源临时重定向到CDN实现网站加速</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/MINGW64-HEXO-TTY-ERROR/">MINGW64环境更新HEXO到Github提示TTY错误</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/Building-VPN-network/">构建 VPN 网络服务</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/Upgrade-VPS-FreeBSD-DigitalOcean/">升级 DigitalOcean VPS 里的 FreeBSD</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/09/Hostker-forced-HTTPS/">Hostker 主机的优化配置</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/08/NGINXHTTP2/">为 NGINX 开启 HTTP2 功能</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/08/Implement-HTTPS-feature-through-VeryCloud-personal-website/">通过 VeryCloud 为个人网站实现 HTTPS 功能</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/07/GITHUBCNAME301/">GitHub.io 301 重定向</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/07/我读书少，你不要骗我/">我读书少，你不要骗我</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/07/repair-box-br/">修复IE下显示br换行符显示方块问题</a>
+          </li>
+        
+          <li>
+            <a href="/notes/2015/07/soysauce/">打酱油</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+<div class="widget-wrap">
+  <h3 class="widget-title">友情链接</h3>
+  <div class="widget">
+  <ul class="entry">
+  <h4><a href="/notes/addlinks/">→ → → 申请友情链接？？？</a></h4>
+  <li><a href="https://blog.delphij.net/" target="_blank">李&nbsp;&nbsp;&nbsp;鑫</a> | FreeBSD，delphij's Chaos</li>
+  <li><a href="https://bsdelf.github.io/" target="_blank">沈琰辉</a> | FreeBSD，bsdelf's Blog</li>
+  <li><a href="https://www.liurongxing.com/" target="_blank">刘荣星</a> | FreeBSD，记录自己成长点滴</li>
+  <li><a href="http://www.7rack.info/" target="_blank">轨&nbsp;&nbsp;&nbsp;迹</a> | FreeBSD，7rack</li>
+  <li><a href="http://lwhsu.org/" target="_blank">許立文</a> | FreeBSD，Li-Wen's</li>
+  <li><a href="http://easun.org/" target="_blank">路&nbsp;&nbsp;&nbsp;杨</a> | Perl，Easun.org</li>
+  <li><a href="http://eleveni386.7axu.com/" target="_blank">Eleven</a> | Linux，Eleven.I386’s</li>
+  <li><a href="http://lilydjwg.is-programmer.com/" target="_blank">依&nbsp;&nbsp;&nbsp;云</a> | Linux，Lilydjwg</li>
+  <li><a href="https://supercat-lab.org/" target="_blank">老&nbsp;&nbsp;&nbsp;猫</a> | Linux，SuperCat's</li>
+  <li><a href="https://blog.phoenixlzx.com/" target="_blank">凤凰君</a> | Linux，Phoenix's island</li>
+  <li><a href="http://t.tiany.me/" target="_blank">逸&nbsp;&nbsp;&nbsp;空</a> | Linux，天逸的技术随笔</li>
+  <li><a href="https://www.haomwei.com/" target="_blank">屠&nbsp;&nbsp;&nbsp;城</a> | Hexo，haomwei.com</li>
+  <li><a href="http://metaworld.top/" target="_blank">Meta&nbsp;&nbsp;</a> | Hexo，Meta World</li>
+  <li><a href="https://blog.ikke.moe/" target="_blank">梦&nbsp;&nbsp;&nbsp;路</a> | Hexo，YumeMichi's</li>
+  <li><a href="http://qiancheng.me/" target="_blank">千橙说</a> | Hexo，qiancheng.me</li>
+  <li><a href="https://qistchan.com/" target="_blank">浮&nbsp;&nbsp;&nbsp;风</a> | Hexo，@淇Qist的网络自留地</li>
+  <li><a href="http://huts.cc/" target="_blank">紫&nbsp;&nbsp;&nbsp;妖</a> | Hexo，web前端小屋</li>
+  <li><a href="https://www.ioliu.cn/" target="_blank">colyy&nbsp;</a> | Hexo，云淡风轻</li>
+  <li><a href="http://whelamc.me/" target="_blank">老&nbsp;&nbsp;&nbsp;蔡</a> | Hexo，Just a Fontend Engineer</li>
+  <li><a href="http://ro2en.org/" target="_blank">月&nbsp;&nbsp;&nbsp;寺</a> | Hexo，Rozen‘s Blog</li>
+  <li><a href="http://mingmings.org/" target="_blank">宋明明</a> | Hexo，Operation Engineer</li>
+  <li><a href="http://www.xianingtan.xyz/" target="_blank">谭夏宁</a> | Hexo，Xianing Tan</li>
+  <li><a href="http://www.cuolove.com/" target="_blank">错爱网</a> | WordPress，Cuolove.com</li>
+  <li><a href="https://www.leavesongs.com/" target="_blank">离别歌</a> | 安全，leavesongs.com</li>
+  <!--<li><a href="http://xtian.me/" target="_blank">郭晓湉</a> | 程序媛，X.Tian</li>
+  <li><a href="http://xiaohudie.net/" target="_blank">小蝴蝶</a> | 程序媛，xiaohudie.net</li>
+  <li><a href="http://yexiqingxi.com/" target="_blank">叶夕青</a> | 程序媛，浮华犹裳，倾尽锦年</li>
+  <li><a href="https://yu.gg/" target="_blank">语の国</a> | 程序媛，yu.gg</li>-->
+  <li><a href="http://redraiment.com/" target="_blank">张泽鹏</a> | 老乡，iKnowledge</li>
+  </ul>
+  <!--
+  <li><a href="http://kuangqi.me/" target="_blank">锦瑟华年</a>：The Bloom of Youth | 锦瑟华年</li>
+  <li><a href="http://gengbiao.me/" target="_blank">coney</a>：有些事情,再不去做就忘了.有些人,再不去找就没了</li>
+  <li><a href="http://www.arao.me/" target="_blank">ARao Lin</a>：我们的征途是星辰大海</li>
+  <li><a href="http://x-forwarded-for.com/" target="_blank">lumia_Prime's blog</a>：猫吃鱼，狗吃肉，奥特曼打小怪兽</li>
+  <li><a href="http://xiaomonster.xyz/" target="_blank">Monster's blog</a>：Just So So ...</li>
+  <li><a href="http://www.wuwenliang.net/" target="_blank">知行合一</a>：Do Not Go Gentle Into That Good Night</li>
+  <li><a href="https://diary.moe/" target="_blank">Dsus4's Diary</a>：</li>
+  <li><a href="https://www.freejishu.com/" target="_blank">freejishu的美丽世界</a>：一个全新的境界</li>
+  -->
+  </div>
+</div>
+
+<div class="widget-wrap">
+  <h3 class="widget-title">功能</h3>
+  <div class="widget">
+  <ul class="entry">
+  <h4><a href="/403.html">注册</a><br>
+    <a href="/403.html">登录</a><br>
+    <a href="/notes/atom.xml">日志 RSS</a><br>
+    <a href="/notes/atom.xml">评论 RSS</a><br>
+    <a href="https://hexo.io/" target="_blank">WordPress.com</a></h4>
+  </ul>
+  </div>
+</div></aside></div>
+<footer id="footer">
+<div class="outer">
+	<div id="footer-info" class="inner">
+		<!--Powered by <a href="https://www.freebsd.org/" target="_blank">FreeBSD</a> · <a href="http://nginx.org/" target="_blank">NGINX</a> · <a href="https://hexo.io/" target="_blank">Hexo</a>-->
+		<a href="https://www.freebsd.org/" target="_blank" rel="nofollow"><img src="/notes/images/powerani.gif" height="55" /></a>
+		<a href="/go/aliyun" target="_blank" rel="nofollow"><img src="/notes/images/aliyun.png" height="39" /></a>
+		<a href="/go/digitalocean" target="_blank" rel="nofollow"><img src="/notes/images/do.png" height="39" /></a><br>
+		Copyright &copy; 2011 - 2016 Haowu Ge. All rights reserved.
+	</div>
+</div>
+</footer></div>
+<nav id="mobile-nav"><a href="/notes/" class="mobile-nav-link">主页</a><a href="/notes/archives" class="mobile-nav-link">归档</a><a href="/" class="mobile-nav-link">关于</a></nav>
+
+<script src="https://dn-gehaowu.qbox.me/libs/jquery-2.1.4/jquery.min.js"></script>
+<link rel="stylesheet" href="/notes/fancybox/jquery.fancybox.css" type="text/css">
+<script src="/notes/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+<script src="/notes/js/script.js" type="text/javascript"></script>
+</div>
+</body>
+</html>
