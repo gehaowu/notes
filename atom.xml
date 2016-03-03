@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录 & 监督]]></subtitle>
   <link href="/notes/atom.xml" rel="self"/>
   <link href="https://www.gehaowu.com/notes//"/>
-  <updated>2015-12-08T12:33:20.393Z</updated>
+  <updated>2016-03-03T13:02:36.681Z</updated>
   <id>https://www.gehaowu.com/notes//</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[似乎，又一年，你好 2016 ！]]></title>
+    <link href="https://www.gehaowu.com/notes/2016/03/another-year/"/>
+    <id>https://www.gehaowu.com/notes/2016/03/another-year/</id>
+    <published>2016-03-03T12:54:01.000Z</published>
+    <updated>2016-03-03T13:02:36.681Z</updated>
+    <content type="html"><![CDATA[<p>似乎，又一年，你好 2016 ！</p>
+<p>新的一年。。又换了一个工作，11 年毕业后在第一家企业干了三年。</p>
+<p>因为轮岗制度很难执行。。弄了三年。。基本上没学会啥，</p>
+<p>14 年逼自己换了一个工作，直接混商业企业的主办会计。。</p>
+<p>一年后，准备回家。。家里没待几天。。家里就开始催。。。。。。。。。。</p>
+<p>然后在隔壁市的一家工业企业确认的 offer 后直接就去了。。</p>
+<p>工业会计真的好复杂。。。</p>
+<p>最后感慨一下。。直属领导如果不待见你的情况下。。。做事会很难。。。就算特么的大 BOSS 是你后台也白搭。。</p>
+<p>XDDD</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>似乎，又一年，你好 2016 ！</p>
+<p>新的一年。。又换了一个工作，11 年毕业后在第一家企业干了三年。</p>
+<p>因为轮岗制度很难执行。。弄了三年。。基本上没学会啥，</p>
+<p>14 年逼自己换了一个工作，直接混商业企业的主办会计。。</p>
+<p>一年后]]>
+    </summary>
+    
+      <category term="主办会计" scheme="https://www.gehaowu.com/notes/tags/%E4%B8%BB%E5%8A%9E%E4%BC%9A%E8%AE%A1/"/>
+    
+      <category term="商业" scheme="https://www.gehaowu.com/notes/tags/%E5%95%86%E4%B8%9A/"/>
+    
+      <category term="工业" scheme="https://www.gehaowu.com/notes/tags/%E5%B7%A5%E4%B8%9A/"/>
+    
+      <category term="碎碎念" scheme="https://www.gehaowu.com/notes/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+      <category term="碎碎念" scheme="https://www.gehaowu.com/notes/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[为域名添加 DNSSEC 记录]]></title>
@@ -610,33 +646,6 @@
       <category term="个人主页" scheme="https://www.gehaowu.com/notes/tags/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/"/>
     
       <category term="信息技术" scheme="https://www.gehaowu.com/notes/tags/%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/"/>
-    
-      <category term="开源" scheme="https://www.gehaowu.com/notes/tags/%E5%BC%80%E6%BA%90/"/>
-    
-      <category term="信息技术" scheme="https://www.gehaowu.com/notes/categories/%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[通过 Reaver 测试 WPS 安全性]]></title>
-    <link href="https://www.gehaowu.com/notes/2015/07/WPS-safety-test-by-Reaver/"/>
-    <id>https://www.gehaowu.com/notes/2015/07/WPS-safety-test-by-Reaver/</id>
-    <published>2015-07-01T12:14:17.000Z</published>
-    <updated>2015-07-05T02:00:23.073Z</updated>
-    <content type="html"><![CDATA[<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br><span class="line">airodump-ng wlan0</span><br><span class="line">reaver -i moninterface -b bssid -vv</span><br></pre></td></tr></table></figure>
-<a id="more"></a>]]></content>
-    <summary type="html">
-    <![CDATA[<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br><span class="line">airodump-ng wlan0</span><br><span class="line">reaver -i moninterface -b bssid -vv</span><br></pre></td></tr></table></figure>]]>
-    
-    </summary>
-    
-      <category term="Reaver" scheme="https://www.gehaowu.com/notes/tags/Reaver/"/>
-    
-      <category term="WPS" scheme="https://www.gehaowu.com/notes/tags/WPS/"/>
-    
-      <category term="信息技术" scheme="https://www.gehaowu.com/notes/tags/%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF/"/>
-    
-      <category term="安全" scheme="https://www.gehaowu.com/notes/tags/%E5%AE%89%E5%85%A8/"/>
     
       <category term="开源" scheme="https://www.gehaowu.com/notes/tags/%E5%BC%80%E6%BA%90/"/>
     
