@@ -5,7 +5,7 @@
   <subtitle><![CDATA[记录 & 监督]]></subtitle>
   <link href="/notes/atom.xml" rel="self"/>
   <link href="https://www.gehaowu.com/notes//"/>
-  <updated>2016-05-19T14:56:59.621Z</updated>
+  <updated>2016-05-27T12:54:46.055Z</updated>
   <id>https://www.gehaowu.com/notes//</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[税收减免账务处理]]></title>
+    <link href="https://www.gehaowu.com/notes/2016/05/To-reduce-the-VAT-accounting-treatment/"/>
+    <id>https://www.gehaowu.com/notes/2016/05/To-reduce-the-VAT-accounting-treatment/</id>
+    <published>2016-05-27T12:25:03.000Z</published>
+    <updated>2016-05-27T12:54:46.055Z</updated>
+    <content type="html"><![CDATA[<p>从2016年2月1日起，月销售额不超过10万元的增值税小规模纳税人，免征教育费附加和地方教育附加。</p>
+<h3 id="相关会计处理分录：">相关会计处理分录：</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1、计提增值税时</span><br><span class="line">　　借:	银行存款 2060</span><br><span class="line">　　	贷:	主营业务收入 2000</span><br><span class="line">			应交税费 - 应交增值税 60</span><br><span class="line"></span><br><span class="line">2、根据规定减免时</span><br><span class="line">　　借:	应交税费 - 应交增值税 60</span><br><span class="line">　　	贷:	营业外收入 - 减免税额 60</span><br><span class="line"></span><br><span class="line">3、附加税减免处理</span><br><span class="line">	应纳增值税为 0 ，附加税也为 0 。</span><br></pre></td></tr></table></figure>
+<h3 id="大众创业，万众创新">大众创业，万众创新</h3><p>感谢政府。。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>从2016年2月1日起，月销售额不超过10万元的增值税小规模纳税人，免征教育费附加和地方教育附加。</p>
+<h3 id="相关会计处理分录：">相关会计处理分录：</h3><figure class="highlight"><table><tr><td class="gu]]>
+    </summary>
+    
+      <category term="地方教育费附加" scheme="https://www.gehaowu.com/notes/tags/%E5%9C%B0%E6%96%B9%E6%95%99%E8%82%B2%E8%B4%B9%E9%99%84%E5%8A%A0/"/>
+    
+      <category term="增值税" scheme="https://www.gehaowu.com/notes/tags/%E5%A2%9E%E5%80%BC%E7%A8%8E/"/>
+    
+      <category term="教育费附加" scheme="https://www.gehaowu.com/notes/tags/%E6%95%99%E8%82%B2%E8%B4%B9%E9%99%84%E5%8A%A0/"/>
+    
+      <category term="财务会计" scheme="https://www.gehaowu.com/notes/tags/%E8%B4%A2%E5%8A%A1%E4%BC%9A%E8%AE%A1/"/>
+    
+      <category term="附加税" scheme="https://www.gehaowu.com/notes/tags/%E9%99%84%E5%8A%A0%E7%A8%8E/"/>
+    
+      <category term="财务会计" scheme="https://www.gehaowu.com/notes/categories/%E8%B4%A2%E5%8A%A1%E4%BC%9A%E8%AE%A1/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[VLOOKUP 与 透视表]]></title>
@@ -609,29 +638,6 @@
       <category term="照片" scheme="https://www.gehaowu.com/notes/tags/%E7%85%A7%E7%89%87/"/>
     
       <category term="碎碎念" scheme="https://www.gehaowu.com/notes/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-      <category term="碎碎念" scheme="https://www.gehaowu.com/notes/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[完美世界]]></title>
-    <link href="https://www.gehaowu.com/notes/2015/07/perfectworld/"/>
-    <id>https://www.gehaowu.com/notes/2015/07/perfectworld/</id>
-    <published>2015-07-09T12:47:47.000Z</published>
-    <updated>2015-07-09T13:09:03.808Z</updated>
-    <content type="html"><![CDATA[<p>完美世界<br>演唱：水木年华<br>不知日升月落多少个夏秋<br>不知我已这样奔跑了多久<br>我从出生就注定一生的寻求<br>远方那完美世界的爱和自由<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird<br><a id="more"></a><br>没什么能阻拦自由的天地<br>这样沉默爱你不知有多久<br>我愿付出我的生命和所有<br>我要你不顾一切跟我走<br>去向完美世界的爱和自由<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird<br>没什么能阻拦我们在一起<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird<br>没什么能阻拦自由的天地<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird<br>没什么能阻拦我们在一起<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=376221&auto=1&height=66"></iframe>]]></content>
-    <summary type="html">
-    <![CDATA[<p>完美世界<br>演唱：水木年华<br>不知日升月落多少个夏秋<br>不知我已这样奔跑了多久<br>我从出生就注定一生的寻求<br>远方那完美世界的爱和自由<br>Fly with me<br>In the perfect world<br>Go with me<br>Just like a bird<br>]]>
-    
-    </summary>
-    
-      <category term="完美世界" scheme="https://www.gehaowu.com/notes/tags/%E5%AE%8C%E7%BE%8E%E4%B8%96%E7%95%8C/"/>
-    
-      <category term="碎碎念" scheme="https://www.gehaowu.com/notes/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-    
-      <category term="音乐" scheme="https://www.gehaowu.com/notes/tags/%E9%9F%B3%E4%B9%90/"/>
     
       <category term="碎碎念" scheme="https://www.gehaowu.com/notes/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
     
